@@ -1,0 +1,107 @@
+# Yangbajing-garden Configuration
+## Docs: http://hexo.io/docs/configuration.html
+## Source: https://github.com/hexojs/hexo/
+
+# Site
+title: 羊八井花园
+subtitle: 羊八井 -> 杨景
+description: 全栈工程师，爱老婆、爱编程
+author: 杨景
+language: zh-CN
+timezone: Asia/Chongqing
+
+# URL
+## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
+url: http://www.yangbajing.me
+root: /
+permalink: :year/:month/:day/:title/
+permalink_defaults:
+
+# Directory
+source_dir: source
+public_dir: public
+tag_dir: tags
+archive_dir: archives
+category_dir: categories
+code_dir: downloads/code
+i18n_dir: :lang
+skip_render:
+
+# Writing
+new_post_name: :year-:month-:day-:title.md # File name of new posts
+default_layout: post
+titlecase: false # Transform title into titlecase
+external_link: true # Open external links in new tab
+filename_case: 1
+render_drafts: false
+post_asset_folder: false
+relative_link: false
+future: true
+highlight:
+  enable: true
+  line_number: true
+  auto_detect: true
+  tab_replace:
+
+# Category & Tag
+default_category: uncategorized
+category_map:
+tag_map:
+
+# Date / Time format
+## Hexo uses Moment.js to parse and display date
+## You can customize the date format as defined in
+## http://momentjs.com/docs/#/displaying/format/
+date_format: YYYY-MM-DD
+time_format: HH:mm:ss
+
+# Pagination
+## Set per_page to 0 to disable pagination
+per_page: 16
+pagination_dir: page
+
+# Extensions
+## Plugins: http://hexo.io/plugins/
+## Themes: http://hexo.io/themes/
+#theme: landscape
+theme: hueman
+
+# Deployment
+## Docs: http://hexo.io/docs/deployment.html
+deploy:
+  type: git
+  repo: git@github.com:yangbajing/yangbajing.github.io.git
+
+# theme hueman
+menu:
+  Home: /
+  Categories:
+  About: /about/index.html
+
+# Thumbnail
+#thumbnail: true
+
+# Scroll Loading
+scrollLoading: true
+
+# Sidebar
+social_links:
+  weibo: http://weibo.com/yangbajing
+widgets:
+- recent_posts
+- category
+- archive
+- tagcloud
+- links
+
+# Links
+links:
+  大魔头谈软件开发: http://blog.damotou.info
+  写点什么（宏江）: http://hongjiang.info
+  扶墙老师: http://afoo.me
+  Freewind: http://freewind.in
+  XLZD: http://xlzd.me
+
+# Miscellaneous
+# google_analytics:
+favicon: /favicon.jpg
