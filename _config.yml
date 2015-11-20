@@ -4,7 +4,7 @@
 
 # Site
 title: 羊八井花园
-subtitle: 羊八井 -> 杨景
+subtitle: 羊八井花园 -> 杨景
 description: 全栈工程师，爱老婆、爱编程
 author: 杨景
 language: zh-CN
@@ -86,6 +86,7 @@ scrollLoading: true
 
 # Sidebar
 social_links:
+  github: https://github.com/yangbajing
   weibo: http://weibo.com/yangbajing
 widgets:
 - recent_posts
@@ -102,6 +103,11 @@ links:
   Freewind: http://freewind.in
   XLZD: http://xlzd.me
 
+use_google_apis: false
+
 # Miscellaneous
 # google_analytics:
 favicon: /favicon.jpg
+
+disqus_shortname: yangbajing
+

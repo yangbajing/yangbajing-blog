@@ -1,11 +1,13 @@
 title: Play2 + ReactiveMongo 实现一个活动报名应用
 date: 2015-07-29 20:17:26
-categories: playframework
+categories: scala
 tags:
+- scala
 - playframework
 - reactivemongo
 - 活动报名
 ---
+
 - Play 2: `https://playframework.com`
 - ReactiveMongo: `http://reactivemongo.org`
 
