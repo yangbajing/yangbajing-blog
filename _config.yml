@@ -97,11 +97,14 @@ widgets:
 
 # Links
 links:
-  大魔头谈软件开发: http://blog.damotou.info
   写点什么（宏江）: http://hongjiang.info
   扶墙老师: http://afoo.me
+  杨肉的演讲台: http://yangzhe1991.org/blog/
   Freewind: http://freewind.in
+  #大魔头谈软件开发: http://blog.damotou.info
   XLZD: http://xlzd.me
+  Rocky: http://rockyblog.cn/blog/
+  Chun's blog: http://blog.94fzb.com
 
 use_google_apis: false
 
@@ -109,5 +112,6 @@ use_google_apis: false
 # google_analytics:
 favicon: /favicon.jpg
 
-disqus_shortname: yangbajing
+#disqus_shortname: yangbajing
+duoshuo_shortname: yangbajing-me
 
