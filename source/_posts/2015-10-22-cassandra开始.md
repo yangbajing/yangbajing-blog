@@ -1,7 +1,9 @@
 title: Canssandra开始
 date: 2015-10-22 21:50:49
 updated: 2015-10-26 21:30:32
-categories: bigdata
+categories: 
+- bigdata
+- cassandra
 tags:
 - cassandra
 - 集群

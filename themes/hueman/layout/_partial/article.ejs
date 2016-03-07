@@ -32,6 +32,20 @@
       <p class="article-byline">
         <%- partial('post/date', {class_name: 'article-date', date_format: null}) %>
       </p>
+  <div class="ds-share flat" data-thread-key="<%= post.layout %>-<%= post.slug %>" data-title="<%= post.title %>" data-url="<%= page.permalink %>">
+      <div class="ds-share-inline">
+        <ul  class="ds-share-icons-16">
+      	
+          <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+          <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+          <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+          <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+      	
+        </ul>
+        <div class="ds-share-icons-more">
+      </div>
+    </div>
+  </div>     
       <div class="article-entry" itemprop="articleBody">
         <%- post.content %>
       </div>
