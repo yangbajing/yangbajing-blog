@@ -76,7 +76,7 @@ deploy:
 menu:
   Home: /
   Categories:
-  About: https://github.com/yangbajing
+  About: /2016/07/26/about/
 
 # Thumbnail
 #thumbnail: true
@@ -101,10 +101,6 @@ links:
   扶墙老师: http://afoo.me
   杨肉的演讲台: http://yangzhe1991.org/blog/
   Freewind: http://freewind.in
-  #大魔头谈软件开发: http://blog.damotou.info
-  XLZD: http://xlzd.me
-  Rocky: http://rockyblog.cn/blog/
-  Chun's blog: http://blog.94fzb.com
 
 use_google_apis: false
 
