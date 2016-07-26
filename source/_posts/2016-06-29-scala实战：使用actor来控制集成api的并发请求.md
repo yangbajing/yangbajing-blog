@@ -4,7 +4,7 @@ category: scala
 tags: scala, akka, actor
 ---
 
-*本文源码在：[https://github.com/yangbajing/scala-applications/tree/master/scala-batchrequest](https://github.com/yangbajing/scala-applications/tree/master/scala-batchrequest)*
+*本文源码在：[https://github.com/yangbajing/scala-applications/tree/master/combine-request](https://github.com/yangbajing/scala-applications/tree/master/combine-request)*
 
 ## 背景
 
@@ -125,3 +125,28 @@ class CorpDetailActor(infraResource: InfraResource,
 
 在这里我们实现了`readFromDB`和`readFromInfra`两个函数值，代码很直观。需要注意的地方是通过`infraResource`向第3方数据提供商付费请求数据获得结果后缓存数据到本地数据库这个地方。一定要在本地缓存完成以后再向调用方返回数据，若你直接向调用方返回数据而把缓存操作放到另一个线程中，那这里又会引起一个并发问题。因为在你缓存成功之前很有可能会有另一个请求要求查询相同数据，而这时它在本地数据库中并不能找到，而系统会再次向第3方数据提供收请求你刚刚才付费了的那家公司的工商信息。所以，千万记住！在缓存成功后再向调用方返回数据。
 
+## 测试
+
+**[CombineExample]() 合并请示测试效果：**
+
+```
+[2016-07-02T13:30:29.514] 本地数据库未找到公司：科技公司
+[2016-07-02T13:30:30.526] 收到查询：科技公司 工商信息付费请求
+[2016-07-02T13:30:30.529] 保存公司: Company(科技公司) 成功
+Some(Company(科技公司)), Some(Company(科技公司)), Some(Company(科技公司))
+```
+
+**[RepetitionExample]() 未合并请示时测试效果：**
+
+```
+[2016-07-02T17:30:45.182] 本地数据库未找到公司：科技公司
+[2016-07-02T17:30:45.182] 本地数据库未找到公司：科技公司
+[2016-07-02T17:30:45.181] 本地数据库未找到公司：科技公司
+[2016-07-02T17:30:46.204] 收到查询：科技公司 工商信息付费请求
+[2016-07-02T17:30:46.204] 收到查询：科技公司 工商信息付费请求
+[2016-07-02T17:30:46.206] 收到查询：科技公司 工商信息付费请求
+[2016-07-02T17:30:46.216] 保存公司: Company(科技公司) 成功
+[2016-07-02T17:30:46.216] 保存公司: Company(科技公司) 成功
+[2016-07-02T17:30:46.216] 保存公司: Company(科技公司) 成功
+Some(Company(科技公司)), Some(Company(科技公司)), Some(Company(科技公司))
+```
