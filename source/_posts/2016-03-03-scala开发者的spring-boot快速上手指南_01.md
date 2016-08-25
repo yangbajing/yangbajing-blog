@@ -248,4 +248,5 @@ Scala 从各方面来看，配置和代码，期简洁性都是优于Java。对�
 
 **本系列文章**
 
-- [Scala开发者的Spring-Boot快速上手指南 02：Scala惯用法](http://www.yangbajing.me/2016/03/04/scala%E5%BC%80%E5%8F%91%E8%80%85%E7%9A%84spring-boot%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B%E6%8C%87%E5%8D%97-02%EF%BC%9Ascala%E6%83%AF%E7%94%A8%E6%B3%95/)
+- [Scala开发者的Spring-Boot快速上手指南 01](/2016/03/03/scala%E5%BC%80%E5%8F%91%E8%80%85%E7%9A%84spring-boot%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B%E6%8C%87%E5%8D%97_01/)
+- [Scala开发者的Spring-Boot快速上手指南 02：Scala惯用法](/2016/08/25/scala%E5%BC%80%E5%8F%91%E8%80%85%E7%9A%84spring-boot%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B%E6%8C%87%E5%8D%97-02%EF%BC%9Ascala%E6%83%AF%E7%94%A8%E6%B3%95/)
