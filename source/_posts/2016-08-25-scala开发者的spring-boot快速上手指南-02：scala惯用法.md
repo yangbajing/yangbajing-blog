@@ -16,7 +16,7 @@ tags:
 
 ## 从Maven到Gradle
 
-第一篇文章是基于Maven做项目配置的，现在换成了Gradle。原因？Spring官方默认都是基于Gradle了，而且现在很多大型的Java项目都是基于Gradle进行构建了。如：Android、Kafka（Linkdin整体采用Gradle）。再加上我是一个比较爱折腾的人，既然现在有时间，为什么不换到Gradle呢？
+第一篇文章是基于Maven做项目配置的，现在换成了Gradle。原因？Spring官方默认都是基于Gradle了，而且现在很多大型的Java项目都是基于Gradle进行构建了。如：Android、Kafka（Linkdin整体采用Gradle）。再加上我是一个比较爱折腾的人，既然现在有时间，为什么不试试Gradle呢？
 
 代码在这里：[https://github.com/yangbajing/spring-boot-scala](https://github.com/yangbajing/spring-boot-scala)，这次不但把构建工具换成了Gradle，还一步到位使用了多项目的构建方式，这样更符合真实开发的场景。
  **注意：在build.gradle配置中，需要重新设置Scala和Java源码的搜索路径，把Java源码路径移动Scala的搜索路径来。不然编译时会遇到Java代码找不到Scala代码符号问题
@@ -135,6 +135,35 @@ $ curl -XPOST -H 'content-type: application/json;utf8' -d '{"name":"yangbajing",
 [{"name":"yangbajing","age":30,"user":{"name":"杨景","nickname":"羊八井"},"status":null,"createdAt":"2016-08-25T17:26:03.352"},{"name":"yangbajing","age":31,"user":{"name":"杨景","nickname":"羊八井"},"status":true,"createdAt":"2016-08-25T17:26:03.352"}]
 ```
 
+## Java Function 和 Scala Function[N]
+
+Java 8开始，支持Lambda函数。但是Java的Lambda函数与Scala的函数类型是不兼容的（好消息是，从Scala 2.12开始，将兼容Java Lambda函数）。我们可以使用`scala-java8-compat`这个库来还算优雅的解决这个问题。
+
+首先添加`scala-java8-comat`依赖：
+
+```gradle
+    compile("org.scala-lang.modules:scala-java8-compat_$scalaLibVersion:0.7.0")
+```
+
+在Scala中访问Java8 Function，可以使用如下方式：
+
+```scala
+import scala.compat.java8.FunctionConverters._
+
+def(@RequestParam name: Optional[String], ...
+
+  name.orElseGet(asJavaSupplier(() => reqMsg.name))
+```
+
+除了显示的使用`asJavaSupplier`来转换特定的Java8 Function，还可以使用`asJava`隐式转换来自动转换：
+
+```scala
+ name.orElseGet((() => reqMsg.name).asJava)
+```
+
+## 总结
+
+也许你并不喜欢Scala，也不需要在Spring中使用Scala，Java 8也足够。但我希望能为你打开了一扇门，在JVM平台上还有如此有意思的语言。
 
 **本系列文章**
 
