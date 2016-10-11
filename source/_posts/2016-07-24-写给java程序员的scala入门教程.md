@@ -309,13 +309,13 @@ Scala中默认都是**Immutable collection**，在集合上定义的操作都不
 Scala中也支持**Tuple**（元组）这种集合，但最多只支持22个元素（事实上Scala中定义了`Tuple0`、`Tuple1`……`Tuple22`这样22个`TupleX`类，实现方式与`C++ Boost`库中的`Tuple`类似）。和大多数语言的Tuple类似（比如：Python），Scala也采用小括号来定义元组。
 
 ```scala
-scala> val tuple1 = (1, 2, 3)
+scala> val tuple3 = (1, 2, 3)
 tuple1: (Int, Int, Int) = (1,2,3)
 
-scala> tuple1._2
+scala> tuple3._2
 res17: Int = 2
 
-scala> val tuple2 = Tuple2("杨", " )
+scala> val tuple2 = Tuple2("杨", "景")
 tuple2: (String, String) = (杨,景)
 ```
 
