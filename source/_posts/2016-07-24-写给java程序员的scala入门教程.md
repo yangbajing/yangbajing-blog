@@ -1,6 +1,6 @@
 title: 写给Java程序员的Scala入门教程
 date: 2016-07-24 21:09:41
-category: scala
+categories: scala
 tags:
 - scala
 - java

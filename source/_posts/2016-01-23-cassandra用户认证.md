@@ -1,6 +1,8 @@
 title: Cassandra用户认证
 date: 2016-01-23 11:55:37
-categories: bigdata
+categories: 
+- bigdata
+- cassandra
 tags:
 - cassandra
 ---

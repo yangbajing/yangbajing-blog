@@ -1,6 +1,6 @@
 title: Scala实战：使用Actor来控制集成API的并发请求
 date: 2016-06-29 13:52:51
-category: scala
+categories: scala
 tags: scala, akka, actor
 ---
 

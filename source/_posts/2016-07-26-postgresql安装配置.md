@@ -1,6 +1,6 @@
 title: PostgreSQL安装配置
 date: 2016-07-26 10:29:01
-category:
+categories:
 - bigdata
 - postgresql
 tags:

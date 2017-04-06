@@ -1,6 +1,6 @@
 title: Hive与Spark
 date: 2016-03-31 11:27:39
-category:
+categories:
 - bigdata
 - spark
 tags:

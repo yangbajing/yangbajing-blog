@@ -33,6 +33,7 @@
         <%- partial('post/date', {class_name: 'article-date', date_format: null}) %>
       </p>
   <div class="ds-share flat" data-thread-key="<%= post.layout %>-<%= post.slug %>" data-title="<%= post.title %>" data-url="<%= page.permalink %>">
+<!--
       <div class="ds-share-inline">
         <ul  class="ds-share-icons-16">
       	
@@ -45,6 +46,7 @@
         <div class="ds-share-icons-more">
       </div>
     </div>
+-->
   </div>     
       <div class="article-entry" itemprop="articleBody">
         <%- post.content %>

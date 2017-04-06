@@ -1,6 +1,8 @@
 title: Akka微服务实战：Akka Http
 date: 2016-07-28 22:41:28
-category: scala
+categories: 
+- scala
+- akka
 tags:
 - akka
 - akka http
