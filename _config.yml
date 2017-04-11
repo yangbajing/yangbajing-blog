@@ -5,7 +5,7 @@
 # Site
 title: 羊八井花园
 subtitle: 羊八井花园 -> 杨景
-description: 承接各类大小Scala，Akka，Play，Cassandra业务
+description: 羊八井/杨景的个人站点，Scala/Java/Javascript/Cassandra/Akka/Elasticsearch/BigData
 author: 杨景
 language: zh-CN
 timezone: Asia/Chongqing
@@ -70,7 +70,8 @@ theme: hueman
 ## Docs: http://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: git@github.com:yangbajing/yangbajing.github.io.git
+  repo: https://github.com/yangbajing/yangbajing.github.io.git
+  branch: master
 
 # theme hueman
 menu:
@@ -91,9 +92,9 @@ social_links:
 widgets:
 - recent_posts
 - category
-- archive
 - tagcloud
 - links
+#- archive
 
 # Links
 links:
@@ -102,6 +103,7 @@ links:
   杨肉的演讲台: http://yangzhe1991.org/blog/
   Freewind: http://freewind.in
 
+use_local_fonts: true
 use_google_apis: false
 
 # Miscellaneous
@@ -110,4 +112,10 @@ favicon: /favicon.jpg
 
 disqus_shortname: yangbajing
 #duoshuo_shortname: yangbajing-me
+
+sitemap:
+  path: sitemap.xml
+baidusitemap:
+  path: baidusitemap.xml
+
 

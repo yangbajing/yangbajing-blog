@@ -30,9 +30,10 @@ tags:
 
 **副本因子----控制数据的冗余份数**
 
-`CREATE KEYSPACE Excelsior WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 3 };`
-
-`CREATE KEYSPACE "Excalibur" WITH REPLICATION = {'class' : 'NetworkTopologyStrategy', 'dc1' : 3, 'dc2' : 2};`
+```sql
+CREATE KEYSPACE Excelsior WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 3 };
+CREATE KEYSPACE Excalibur WITH REPLICATION = {'class' : 'NetworkTopologyStrategy', 'dc1' : 3, 'dc2' : 2};
+```
 
 ## 可调节的一致性
 
@@ -53,7 +54,7 @@ tags:
 - 写操作必须将指定行的数据写到每个数据中心的quorum数量的replica节点的commit log和memtable。
 - 用于多数据中心集群严格的保证相同级别的一致性。例如，如果你希望，当一个数据中心挂掉了，或者不能满足quorum数量的replica节点写操作成功时，写请求返回失败。
 
-**LOCAL_ONE**
+**LOCAL\_ONE**
 
 - 任何一个本地数据中心内的replica节点写操作成功。
 - 对于多数据中心的情况，往往期望至少一个replica节点写成功，但是，又不希望有任何跨数据中心的通信。LOCAL\_ONE正好能满足这样的需求。
@@ -131,23 +132,29 @@ tags:
 
 QUORUM级别确保数据写到指定quorum数量的节点。一个quorum的值由下面的公式四舍五入计算而得：
 
-`(sum_of_replication_factors / 2) + 1`
+```
+(sum_of_replication_factors / 2) + 1
+```
 
-`sum_of_replication_factors`指每个数据中心的所有replication\_factor设置的总和。
+`sum_of_replication_factors` 指每个数据中心的所有 replication\_factor 设置的总和。
 
 例如，如果某个单数据中心的replication factor是3，quorum值为2-表示集群可以最多容忍1个节点down。如果replication factor是6，quorum值为4-表示集群可以最多容忍2个节点down。如果是双数据中心，每个数据中心的replication factor是3，quorum值为4-表示集群可以最多容忍2个节点down。如果是5数据中心，每个数据中心的replication factor of 3，quorum值为8 。
 
 如果想确保读写一致性可以使用下面的公式：
 
-`(nodes_written + nodes_read) > replication_factor`
+```
+(nodes_written + nodes_read) > replication_factor
+```
 
 例如，如果应用程序使用QUORUM级别来读和写，replication factor 值为3，那么，该设置能够确保2个节点一定会被写入和读取。读节点数加上写写点数（4）个节点比replication factor （3）大，这样就能确保一致性。
 
+## 应用开发
+
 ### Java批量查询、写入配置
 
-在使用`BatchStatement`进行插入操作时会发现，当数据量稍大以后数据库中并没有加入新的数据。这是因为Cassandra默认对批量操作的数据大小限制得比较低。我们将其修改即可。
+在使用 `BatchStatement` 进行插入操作时会发现，当数据量稍大以后数据库中并没有加入新的数据。这是因为Cassandra默认对批量操作的数据大小限制得比较低。我们将其修改即可。
 
-```
+```shell
 # Log WARN on any batch size exceeding this value. 5kb per batch by default.
 # Caution should be taken on increasing the size of this threshold as it can lead to node instability.
 batch_size_warn_threshold_in_kb: 1000
@@ -155,4 +162,3 @@ batch_size_warn_threshold_in_kb: 1000
 # Fail any batch exceeding this value. 50kb (10x warn threshold) by default.
 batch_size_fail_threshold_in_kb: 2000
 ```
-

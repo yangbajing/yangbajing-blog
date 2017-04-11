@@ -2,6 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
+  <meta http-equiv="content-language" content="zh-cn">
   <%
   var title = page.title;
 
@@ -44,7 +45,9 @@
     </style>
   <% } %>
 
-  <% if(theme.use_google_apis) { %>
+  <% if (theme.use_local_fonts) { %>
+    <link href='/assets/css/google-fonts.css' rel='stylesheet' type='text/css'>
+  <% } else if (theme.use_google_apis) { %>
     <link href='//fonts.googleapis.com/css?family=Titillium+Web:300,400,600' rel='stylesheet' type='text/css'>
     <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
   <% } else { %>
