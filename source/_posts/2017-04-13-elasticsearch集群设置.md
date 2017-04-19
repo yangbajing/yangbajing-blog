@@ -1,5 +1,5 @@
 title: Elasticsearch集群设置
-date: 2016-03-08 10:25:24
+date: 2017-04-12 23:11:11
 categories:
 - bigdata
 - elasticsearch
@@ -10,7 +10,7 @@ tags:
 
 Elasticsearch是一个优秀的全文检索和分析引擎，由Shay Banon发起的一个开源搜索服务器项目，2010年2月发布。具有分布式性质和实时功能。
 
-本文使用最新版 [Elasticsearch 2.2.0](https://download.elasticsearch.org/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/2.2.0/elasticsearch-2.2.0.tar.gz)，推荐使用 Java 8 update 20或更新版。
+本文基于5.x版本，需要使用 Java 8 update 20或更新版。
 
 ## 配置
 
