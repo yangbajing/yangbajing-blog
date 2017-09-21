@@ -1,11 +1,14 @@
 title: Scala实战：并发-Future和Promise
 date: 2015-11-28 15:23:32
-categories: scala
+categories: 
+- scala
+- scala实战
 tags:
 - scala
 - future
 - promise
 - 并发
+- scala实战
 ---
 
 并发编程是很困难的，特别是在你没有很好的设计与抽像你的功能层次时。传统的并发解决方案是采用多线程和共享变量，这使得随着代码的增加你很难找到错误根源。
