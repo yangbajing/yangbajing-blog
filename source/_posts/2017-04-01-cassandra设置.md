@@ -7,6 +7,14 @@ tags:
 - cassandra
 ---
 
+## 操作系统
+
+**修改操作系统的TCP keepalive**
+
+```
+sudo /sbin/sysctl -w net.ipv4.tcp_keepalive_time=60 net.ipv4.tcp_keepalive_intvl=60 net.ipv4.tcp_keepalive_probes=5
+```
+
 ## 集群机制
 
 **一致性哈希**
