@@ -1,6 +1,8 @@
 title: Elasticsearch初步使用
 date: 2015-11-02 15:40:09
-categories: bigdata
+categories:
+- bigdata
+- elasticsearch
 tags:
 - elasticsearch
 - 集群

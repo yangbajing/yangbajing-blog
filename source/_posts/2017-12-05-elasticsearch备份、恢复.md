@@ -1,5 +1,8 @@
 title: Elasticsearch备份、恢复
 date: 2017-12-05 14:27:33
+categories:
+- bigdata
+- elasticsearch
 tags:
 ---
 

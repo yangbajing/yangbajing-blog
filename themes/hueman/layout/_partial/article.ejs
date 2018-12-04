@@ -67,24 +67,22 @@
       </div>
     </section>
   <% } %>
-  <% if (!index && post.comments && config.duoshuo_shortname){ %>
   <section id="comments">
     <div id="gitalk-container">
     </div>
     <script>
-      var gitalk = new Gitalk({
-        clientID: '8067c6b20851b7686a1b',
-        clientSecret: '158979e4df8e77d98a3f38c83a6e7394a7f72867',
-        repo: 'https://github.com/yangbajing/yangbajing.github.io',
+      const gitment = new Gitment({
+        id: window.location.pathname, // optional
         owner: 'yangbajing',
-        admin: ['yangbajing'],
-        id: location.pathname,      // Ensure uniqueness and length less than 50
-        distractionFreeMode: true,  // Facebook-like distraction free mode
-        createIssueManually: false
-      })
-
-      gitalk.render('gitalk-container')
+        repo: 'https://github.com/yangbajing/yangbajing.github.io',
+        oauth: {
+          client_id: '138bed6af88dd31e155c',
+          client_secret: '403e57cb27f4284f39851710f5018663664aa6ec',
+        },
+        // ...
+        // For more available options, check out the documentation below
+      });
+      gitment.render('comments')
     </script>
   </section>
-  <% } %>
 <% } %>
