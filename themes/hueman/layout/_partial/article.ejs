@@ -36,18 +36,18 @@
 <!--
       <div class="ds-share-inline">
         <ul  class="ds-share-icons-16">
-      	
+
           <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
           <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
           <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
           <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
-      	
+
         </ul>
         <div class="ds-share-icons-more">
       </div>
     </div>
 -->
-  </div>     
+  </div>
       <div class="article-entry" itemprop="articleBody">
         <%- post.content %>
       </div>
@@ -67,22 +67,4 @@
       </div>
     </section>
   <% } %>
-  <section id="comments">
-    <div id="gitalk-container">
-    </div>
-    <script>
-      const gitment = new Gitment({
-        id: window.location.pathname, // optional
-        owner: 'yangbajing',
-        repo: 'https://github.com/yangbajing/yangbajing.github.io',
-        oauth: {
-          client_id: '138bed6af88dd31e155c',
-          client_secret: '403e57cb27f4284f39851710f5018663664aa6ec',
-        },
-        // ...
-        // For more available options, check out the documentation below
-      });
-      gitment.render('comments')
-    </script>
-  </section>
 <% } %>
