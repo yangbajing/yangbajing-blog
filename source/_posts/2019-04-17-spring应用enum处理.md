@@ -62,13 +62,39 @@ public enum UserStatusEnum implements IEnum<Integer> {
 从int反序列化到enum，需要自定义`IEnumDeserializer`反序列化器，代码如下：
 
 ```java
-public class IEnumDeserializer extends JsonDeserializer<IEnum<?>> {
+public class EnumDeserializers extends Deserializers.Base {
     @Override
-    public UserStatusEnum deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
+    public JsonDeserializer<?> findEnumDeserializer(Class<?> type, DeserializationConfig config, BeanDescription beanDesc) throws JsonMappingException {
+        if (IEnum.class.isAssignableFrom(type)) {
+            return new IEnumDeserializer(EnumResolver.constructUnsafe(type, config.getAnnotationIntrospector()));
+        }
+        return super.findEnumDeserializer(type, config, beanDesc);
+    }
+}
+
+public class IEnumDeserializer extends StdScalarDeserializer<IEnum<Integer>> implements ContextualDeserializer {
+    private final IEnum<Integer>[] enums;
+    private final EnumResolver enumResolver;
+
+    public IEnumDeserializer(EnumResolver byNameResolver) {
+        super(byNameResolver.getEnumClass());
+        this.enumResolver = byNameResolver;
+        this.enums = (IEnum<Integer>[]) enumResolver.getRawEnums();
+    }
+
+    @Override
+    public IEnum<Integer> deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
         int value = p.getIntValue();
-        return Arrays.stream(UserStatusEnum.values()).filter(e -> e.getValue() == value).findFirst()
+
+        return Arrays.stream(this.enums).filter(e -> e.getValue() == value).findFirst()
                 .orElseThrow(() -> new JsonParseException(p, "枚举需要为整数类型"));
     }
+
+    @Override
+    public JsonDeserializer<?> createContextual(DeserializationContext ctxt, BeanProperty property) throws JsonMappingException {
+        return this;
+    }
+
 }
 ```
 
@@ -122,16 +148,31 @@ com.fasterxml.jackson.module.yangbajing.MyModule
 
 ```java
 
+@EnableWebFlux
 @Configuration
-public class MyConfiguration {
+public class WebConfiguration implements WebFluxConfigurer {
+
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    @Override
+    public void configureHttpMessageCodecs(ServerCodecConfigurer configurer) {
+        ServerCodecConfigurer.ServerDefaultCodecs defaultCodecs = configurer.defaultCodecs();
+        defaultCodecs.jackson2JsonEncoder(new Jackson2JsonEncoder(objectMapper));
+        defaultCodecs.jackson2JsonDecoder(new Jackson2JsonDecoder(objectMapper));
+    }
+
     @Bean
-    public ObjectMapper jacksonObjectMapper(Jackson2ObjectMapperBuilder builder) {
+    @Order(-1)
+    public ObjectMapper objectMapper(Jackson2ObjectMapperBuilder builder) {
         return builder.createXmlMapper(false).build().findAndRegisterModules();
     }
 }
 ```
 
-核心就是`findAndRegisterModules()`方法，它将通过`ServiceLoader`机制从classpath路径中找到所有的`Module`并注册到Jackson。
+`findAndRegisterModules()`方法将通过`ServiceLoader`机制从classpath路径中找到所有的`Module`并注册到Jackson。
+
+在`void configureHttpMessageCodecs(ServerCodecConfigurer configurer)`函数中自定义`ServerDefaultCodecs`，使用新的`ObjectMapper`来注册`jackson2JsonEncoder`和`jackson2JsonDecoder`。
 
 ## 小结
 
