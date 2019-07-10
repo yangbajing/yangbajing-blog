@@ -29,6 +29,14 @@ mkdir data commitlog log saved_caches
 
 编辑Cassandra配置文件：`conf/cassandra.yaml`：
 
+**endpoint_snitch**：
+
+```
+endpoint_snitch: GossipingPropertyFileSnitch
+```
+
+配置Cassandra集群支持机架感知，推荐产品使用。
+
 **listen_address**：
 
 ```
@@ -76,6 +84,14 @@ INFO  12:33:36 Node /192.168.31.102 is now part of the cluster
 INFO  12:33:36 Netty using native Epoll event loop
 INFO  12:33:36 InetAddress /192.168.31.102 is now UP
 INFO  12:33:36 Updating topology for /192.168.31.102
+```
+
+## CQLSH
+
+#### 创建keyspace
+
+```
+CREATE KEYSPACE watch_log WITH replication = {'class': 'NetworkTopologyStrategy', 'dc1': 2 };
 ```
 
 ## cqlsh支持查询中文
@@ -129,3 +145,4 @@ scdata - as unlimited
 ```
 $ sudo sysctl -p
 ```
+

@@ -75,13 +75,14 @@ system_auth 的默认 replication 因子为1，这在集群中是非常危险的
 **SimpleStrategy**
 
 ```
-ALTER KEYSPACE "system_auth"
-   WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 3 };
+ALTER KEYSPACE "system_auth" WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 3 };
 ```
 
 **NetworkTopology**
 
 ```
-ALTER KEYSPACE "system_auth"
-   WITH REPLICATION = {'class' : 'NetworkTopologyStrategy', 'dc1' : 3, 'dc2' : 2};
+ALTER KEYSPACE "system_auth" WITH REPLICATION = {'class' : 'NetworkTopologyStrategy', 'dc1' : 2, 'dc2' : 3};
 ```
+
+*注：使用`NetworkTopology`需要设置`cassandra.yaml`的`endpoint_snitch: GossipingPropertyFileSnitch`等具有机架感知功能的snitch*
+

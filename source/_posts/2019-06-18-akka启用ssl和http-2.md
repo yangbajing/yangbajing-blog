@@ -21,7 +21,7 @@ Akka原生支持SSL、HTTPS、HTTP 2，本文记录下各SSL的使用配置。
 
 ## 生成 X.509 证书
 
-本文示例使用Java 1.8的`keytool`来标记证书。
+本文示例使用Java 1.8的`keytool`来创建证书。
 
 ### 生成随机密码
 
@@ -50,18 +50,22 @@ export PW=`cat password`
 
 KEY_FILE=ssl-key
 
-# 创建自签名密钥对根CA证书
+# 创建自签名密钥CA证书和私钥
 keytool -genkeypair -v \
-  -alias ${KEY_FILE} \
-  -dname "CN=Yangbajing, OU=Yangbajing, O=Yangbajing, L=Beijing, ST=Beijing, C=CN" \
-  -keystore ${KEY_FILE}.jks \
-  -keypass:env PW \
-  -storepass:env PW \
+  -dname "CN=www.yangbajing.me, OU=Yangbajing, O=Yangbajing, L=Beijing, ST=Beijing, C=CN" \
   -keyalg RSA \
   -keysize 4096 \
   -ext KeyUsage:critical="keyCertSign" \
   -ext BasicConstraints:critical="ca:true" \
-  -validity 9999
+  -ext SAN="DNS:www.yangbajing.me,DNS:yangbajing.me,DNS:about.yangbajing.me" \
+  -validity 9999 \
+  -alias ${KEY_FILE} \
+  -keystore ${KEY_FILE}.jks \
+  -keypass:env PW \
+  -storepass:env PW
+
+# 以下命令查看刚生成的证书密钥内容：
+# keytool -keystore ${KEY_FILE}.jks -list -v
 
 # 导出${KEY_FILE}公共证书上为${KEY_FILE}.crt，以便在信任存储中使用
 keytool -export -v \
@@ -99,6 +103,9 @@ keytool -genkeypair -v \
 #keytool -importkeystore -srckeystore localdev.com.jks -destkeystore localdev.com.jks -deststoretype pkcs12
 
 # 为 ${DOMAIN} 创建证书签名请求
+# 从技术上讲，密码使用DHE或ECDHE数字签名，RSA进行密码加密。
+# 在你创建完自签名证书和密钥后,还需要前进一小步来创建证书签名申请 (certificate signingrequest,CSR):
+# 现在可以将文件 ${DOMAIN}.csr 提交给你的CA用于签发正式证书了。
 keytool -certreq -v \
   -alias ${DOMAIN} \
   -keypass:env PW \
@@ -107,7 +114,7 @@ keytool -certreq -v \
   -file ${DOMAIN}.csr
 
 # 告诉 ${KEY_FILE} 签署 ${DOMAIN} 证书。注意，扩展是根据请求而不是原始证书。
-# 从技术上讲，密码使用DHE或ECDHE数字签名，RSA进行密码加密。
+# csr -> crt
 keytool -gencert -v \
   -alias ${KEY_FILE} \
   -keypass:env PW \
@@ -162,8 +169,6 @@ Issuer: CN=yangbajing.dev, OU=Yangbajing, O=Yangbajing, L=Beijing, ST=Beijing, C
 ....
 ```
 
-
-
 ## 导出Nginx可用的PEM
 
 如果 yangbajing.me 不使用Java作为TLS端点，同时你想使用Nginx。可需要导出 **PEM** 格式的证书。这需要 `openssl` 来导出私钥。
@@ -183,7 +188,7 @@ keytool -export -v \
   -keystore ${DOMAIN}.jks \
   -rfc
 
-# 创建包含公钥和私钥的 PKCS 12 密钥库
+# 创建包含公钥和私钥的 PKCS12 密钥库
 keytool -importkeystore -v \
   -srcalias ${DOMAIN} \
   -srckeystore ${DOMAIN}.jks \
@@ -198,10 +203,10 @@ keytool -importkeystore -v \
 openssl pkcs12 \
   -nocerts \
   -nodes \
-  -passout env:PW \
-  -passin env:PW \
   -in ${DOMAIN}.p12 \
-  -out ${DOMAIN}.key
+  -out ${DOMAIN}.key \
+  -passout env:PW \
+  -passin env:PW
 
 # 清理
 rm ${DOMAIN}.p12
