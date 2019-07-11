@@ -8,6 +8,10 @@ tags:
 - postgresql 10
 ---
 
+1. [《PostgreSQL从入门到不后悔》](https://www.yangbajing.me/2018/02/05/postgresql%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E4%B8%8D%E5%90%8E%E6%82%94/)
+2. [《PostgreSQL高可用：逻辑复制》](https://www.yangbajing.me/2019/07/10/postgresql%E9%AB%98%E5%8F%AF%E7%94%A8%EF%BC%9A%E9%80%BB%E8%BE%91%E5%A4%8D%E5%88%B6/)
+3. [《PostgreSQL高可用 - PG 11集群》](https://www.yangbajing.me/2019/07/12/postgresql%E9%AB%98%E5%8F%AF%E7%94%A8-PG11%E9%9B%86%E7%BE%A4/)
+
 ## 安装 PostgreSQL 10
 
 下载 PostgreSQL 10，postgresql-10.1-3-linux-x64-binaries.tar.gz。下载地址：[https://get.enterprisedb.com/postgresql/postgresql-10.1-3-linux-x64-binaries.tar.gz](https://get.enterprisedb.com/postgresql/postgresql-10.1-3-linux-x64-binaries.tar.gz)。

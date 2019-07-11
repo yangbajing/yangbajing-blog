@@ -102,7 +102,7 @@ host    all             all             0.0.0.0/0               md5
 
 ```
 listen_addresses = '*'
-max_connections = 1000
+max_connections = 1024
 password_encryption = on
 ```
 
@@ -194,6 +194,9 @@ CREATE ROLE pgrepuser REPLICATION LOGIN PASSWORD 'pgreppass';
 2.. 在 `postgresql.conf` 设置以下配置项：
 
 ```
+listen_addresses = '*'
+max_connections = 1024
+password_encryption = on
 wal_level = hot_standby
 archive_mode = on
 max_wal_sender = 4
@@ -518,7 +521,7 @@ sync_state       | async
 [hldev@centos7-001 ~]$ sudo systemctl stop postgresql-9.6
 ```
 
-2.. 将从节点（centos7-001）变为主节点
+2.. 将从节点（centos7-002）变为主节点
 
 ```
 -bash-4.2$ /usr/pgsql-9.6/bin/pg_ctl promote -D $PGDATA
