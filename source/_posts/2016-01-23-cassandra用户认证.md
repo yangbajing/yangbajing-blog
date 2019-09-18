@@ -42,6 +42,13 @@ create user user1 with password 'password1';
 GRANT ALL PERMISSIONS ON KEYSPACE data TO data;
 ```
 
+*建议分配可访问表*
+
+```
+GRANT select PERMISSION ON system.size_estimates TO devser;
+GRANT select PERMISSION ON system_auth.roles TO devser;
+```
+
 分配权限语句如下：
 
 ```
