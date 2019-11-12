@@ -1,5 +1,5 @@
 title: Akka Typed 常用交互模式
-date: 2019-11-08 10:29:25
+date: 2019-11-11 22:29:25
 categories:
   - scala
   - akka
@@ -12,7 +12,7 @@ tags:
 
 本文将探讨Akka Typed下actor的常用交互模式，相对经典的untyped actor，typed actor在交互与使用方式上有着显著的区别。对Akka Typed还不太了解的读者可以先参阅我的上一篇文章：[《Akka Typed新特性一览》](https://www.yangbajing.me/2019/11/06/akka-typed%E6%96%B0%E7%89%B9%E6%80%A7%E4%B8%80%E8%A7%88/)。
 
-*本文大量参译了Akka官方文档《Interation Patterns》一文（原文链接：[https://doc.akka.io/docs/akka/current/typed/interaction-patterns.html](https://doc.akka.io/docs/akka/current/typed/interaction-patterns.html)）。在巨人的基础之上加入了作者自身的理解和解读，同时作者还添加了一些认为有用的交互模式。希望能给读者带来 1+1>2 的感受。*
+*本文大量参译了Akka官方文档《Interaction Patterns》一文（原文链接：[https://doc.akka.io/docs/akka/current/typed/interaction-patterns.html](https://doc.akka.io/docs/akka/current/typed/interaction-patterns.html)）。在巨人的基础之上加入了作者自身的理解和解读，希望能给读者带来 1+1>=2 的感受。*
 
 - 发送并忘记 (Fire and Forget)
 - 请求/响应 (Request-Response)
@@ -584,4 +584,4 @@ final case class CommandSharding(...., replyEntityId: String, replyEntityType: E
 
 ## 小结
 
-本文对为对官方文档 [https://doc.akka.io/docs/akka/current/typed/interaction-patterns.html](https://doc.akka.io/docs/akka/current/typed/interaction-patterns.html) 的学习，不是翻译，一切内容以官网文档为准。
+本文为对官方文档 [https://doc.akka.io/docs/akka/current/typed/interaction-patterns.html](https://doc.akka.io/docs/akka/current/typed/interaction-patterns.html) 的 **学习**，*不全只是翻译*，一切以官网文档为准。
