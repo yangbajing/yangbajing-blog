@@ -77,7 +77,7 @@ class ConfigManager private (namespace: String, context: ActorContext[Command]) 
         .filter(dataId => in.dataId.forall(v => v.contains(dataId)))
         .mapAsync(20) { dataId =>
           configEntity.ask[Option[ConfigState]](replyTo =>
-            ShardingEnvelope(dataId, ConfigEntity.Query(in.configType, replyTo)))
+            ShardingEnvelope(s"$namespace@$dataId", ConfigEntity.Query(in.configType, replyTo)))
         }
         .collect { case Some(value) => value }
         .drop(offset)
@@ -85,7 +85,7 @@ class ConfigManager private (namespace: String, context: ActorContext[Command]) 
         .runWith(Sink.seq)
         .map(items => ConfigResponse(IntStatus.OK, data = Some(items)))
     } else {
-      Future.successful(ConfigResponse(IntStatus.NOT_FOUND))
+      Future.successful(ConfigResponse(IntStatus.OK, data = Some(Nil)))
     }
     context.pipeToSelf(responseF) {
       case Success(value) => InternalResponse(replyTo, value)
