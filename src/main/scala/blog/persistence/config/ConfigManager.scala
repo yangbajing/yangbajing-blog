@@ -29,7 +29,7 @@ object ConfigManager {
 
   case class ConfigResponse(status: Int, message: String = "", data: Option[AnyRef] = None) extends Response
 
-  final case class ConfigManagerState(dataIds: Vector[String] = Vector()) extends CborSerializable
+  final case class State(dataIds: Vector[String] = Vector()) extends CborSerializable
 
   val TypeKey: EntityTypeKey[Command] = EntityTypeKey("ConfigManager")
 
@@ -49,28 +49,25 @@ class ConfigManager private (namespace: String, context: ActorContext[Command]) 
   import context.executionContext
   private val configEntity = ConfigEntity.init(context.system)
 
-  def eventSourcedBehavior(): EventSourcedBehavior[Command, Event, ConfigManagerState] =
+  def eventSourcedBehavior(): EventSourcedBehavior[Command, Event, State] =
     EventSourcedBehavior(
       PersistenceId.of(TypeKey.name, namespace),
-      ConfigManagerState(), {
+      State(), {
         case (state, ReplyCommand(in, replyTo)) =>
           replyCommandHandler(state, replyTo, in)
         case (_, InternalResponse(replyTo, response)) =>
           Effect.reply(replyTo)(response)
+        case _ =>
+          Effect.none
       },
       eventHandler)
 
-  def replyCommandHandler(
-      state: ConfigManagerState,
-      replyTo: ActorRef[Response],
-      command: AnyRef): Effect[Event, ConfigManagerState] = command match {
-    case in: Query => processPageQuery(state, replyTo, in)
-  }
+  def replyCommandHandler(state: State, replyTo: ActorRef[Response], command: AnyRef): Effect[Event, State] =
+    command match {
+      case in: Query => processPageQuery(state, replyTo, in)
+    }
 
-  private def processPageQuery(
-      state: ConfigManagerState,
-      replyTo: ActorRef[Response],
-      in: Query): Effect[Event, ConfigManagerState] = {
+  private def processPageQuery(state: State, replyTo: ActorRef[Response], in: Query): Effect[Event, State] = {
     val offset = if (in.page > 0) (in.page - 1) * in.size else 0
     val responseF = if (offset < state.dataIds.size) {
       Source(state.dataIds)
@@ -94,5 +91,5 @@ class ConfigManager private (namespace: String, context: ActorContext[Command]) 
     Effect.none
   }
 
-  def eventHandler(state: ConfigManagerState, event: Event): ConfigManagerState = ???
+  def eventHandler(state: State, event: Event): State = ???
 }

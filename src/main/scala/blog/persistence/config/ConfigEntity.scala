@@ -16,7 +16,7 @@ object ConfigEntity {
 
   final case class Query(configType: Option[String], replyTo: ActorRef[Option[ConfigState]]) extends Command
 
-  final case class ConfigEntityState(config: Option[ConfigState] = None) extends CborSerializable
+  final case class State(config: Option[ConfigState] = None) extends CborSerializable
 
   val TypeKey: EntityTypeKey[Command] = EntityTypeKey("ConfigEntity")
 
@@ -31,10 +31,10 @@ object ConfigEntity {
 
 import ConfigEntity._
 class ConfigEntity private (namespace: String, dataId: String, context: ActorContext[Command]) {
-  def eventSourcedBehavior(): EventSourcedBehavior[Command, Event, ConfigEntityState] =
-    EventSourcedBehavior(PersistenceId.of(TypeKey.name, dataId), ConfigEntityState(), commandHandler, eventHandler)
+  def eventSourcedBehavior(): EventSourcedBehavior[Command, Event, State] =
+    EventSourcedBehavior(PersistenceId.of(TypeKey.name, dataId), State(), commandHandler, eventHandler)
 
-  def commandHandler(state: ConfigEntityState, command: Command): Effect[Event, ConfigEntityState] = command match {
+  def commandHandler(state: State, command: Command): Effect[Event, State] = command match {
     case Query(configType, replyTo) =>
       state.config match {
         case None =>
@@ -45,5 +45,5 @@ class ConfigEntity private (namespace: String, dataId: String, context: ActorCon
       }
   }
 
-  def eventHandler(state: ConfigEntityState, event: Event): ConfigEntityState = ???
+  def eventHandler(state: State, event: Event): State = ???
 }

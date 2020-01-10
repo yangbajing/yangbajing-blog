@@ -11,7 +11,7 @@ tags:
   - event-sourced
 ---
 
-在 Akka Persistence 中，数据都缓存在服务内存（状态），后端存储的都是一些持久化的事件日志，没法使用类似 SQL 一样的 DSL 来进行分页查询。利用 Akka Streams 和 Actor 我们可以通过编码的方式来实现分页查询的效果，而且这个分页查询还是分步式、并行的……
+在 Akka Persistence 中，数据都缓存在服务内存（状态），后端存储的都是一些持久化的事件日志，没法使用类似 SQL 一样的 DSL 来进行分页查询。利用 Akka Streams 和 Actor 我们可以通过编码的方式来实现分页查询的效果，而且这个分页查询还是分步式并行的……
 
 ## EventSourcedBehavior
 
@@ -108,7 +108,7 @@ class ConfigManager private (namespace: String, context: ActorContext[Command]) 
         .runWith(Sink.seq)
         .map(items => ConfigResponse(IntStatus.OK, data = Some(items)))
     } else {
-      Future.successful(ConfigResponse(IntStatus.NOT_FOUND))
+      Future.successful(ConfigResponse(IntStatus.NOT_FOUND, data = Some(Nil)))
     }
     context.pipeToSelf(responseF) {
       case Success(value) => InternalResponse(replyTo, value)
@@ -189,10 +189,10 @@ select * from t_config where data_id like '%"in.dataId"%' offset "offset" limit 
 `.mapAsync` 在流执行流程中起了20个并发的异步操作，将委托每个匹配的 `ConfigEntity` （由`s"$namespace@$dataId"`生成`entityId`）执行 `config_type` 字段的查询。这样，完整的SQL语句类似：
 
 ```sql
-select * from t_config where data_id like '%"in.dataId"%' and change_type = "in.changeType" offset "offset" limit "in.size"
+select * from t_config where data_id like '%"in.dataId"%' and config_type = "in.configType" offset "offset" limit "in.size"
 ``` 
 
-`ConfigEntity` 对 `change_type` 部分的查询逻辑实现如下：
+`ConfigEntity` 对 `config_type` 部分的查询逻辑实现如下：
 
 ```scala
 case Query(configType, replyTo) =>
@@ -205,7 +205,7 @@ case Query(configType, replyTo) =>
   }
 ```
 
-若`in.configType`为空，既不需要判断 `change_type` 这个字段，直接返回 `Some(config)` 即可，而这时的SQL语句类似：
+若`in.configType`为空，既不需要判断 `config_type` 这个字段，直接返回 `Some(config)` 即可，而这时的SQL语句类似：
 
 ```sql
 select * from t_config where data_id like '%"in.dataId"%' and true offset "offset" limit "in.size"
