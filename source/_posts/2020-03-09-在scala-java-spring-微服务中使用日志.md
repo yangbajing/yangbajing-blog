@@ -9,15 +9,16 @@ tags:
   - fusion-log
 ---
 
-应用开发、运行时，日志作为调试、留痕的重要工具非常重要，Akka Fusion 对此提供了开箱即用的支持。
+应用开发、运行时，日志作为调试、留痕的重要工具非常重要。对此，Akka Fusion 库为日志处理提供了开箱即用的支持：
 
 - 预置的日志 encoder 配置
 - 通过 filebeat 输出日志到 Elasticsearch
 - 良好的自定义支持
 
-使用 fusion-log 库，需要添加以下依赖：
+使用 fusion-log 库，需要添加以下依赖。
 
 ```sbt
+resolvers += Resolver.bintrayRepo("helloscala", "maven")
 libraryDependencies += "com.helloscala.fusion" %% "fusion-log" % "2.0.6"
 ```
 
@@ -335,16 +336,16 @@ processors:
 version: '3'
 
 services:
-  hongka-elasticsearch:
-    container_name: hongka-elasticsearch
-    image: elasticsearch:6.8.6
+  fusion-elasticsearch:
+    container_name: fusion-elasticsearch
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.6.1
     #restart: on-failure
     ports:
       - 9200:9200
       - 9300:9300
     environment:
       - discovery.type=single-node
-      - cluster.name=hongka-docker-es-cluster
+      - cluster.name=fusion-docker-es-cluster
     ulimits:
       memlock:
         soft: -1
@@ -352,18 +353,22 @@ services:
     networks:
       - fusionlognet
 
-  hongka-kibana:
-    container_name: hongka-kibana
-    image: kibana:6.8.6
+  fusion-kibana:
+    container_name: fusion-kibana
+    image: docker.elastic.co/kibana/kibana:7.6.1
     #restart: on-failure
     ports:
       - 5601:5601
     environment:
-      SERVER_NAME: hongka-kibana
-      ELASTICSEARCH_HOSTS: http://hongka-elasticsearch:9200
+      SERVER_NAME: fusion-kibana
+      ELASTICSEARCH_HOSTS: http://fusion-elasticsearch:9200
     networks:
       - fusionlognet
 
 networks:
   fusionlognet:
 ```
+
+## 小结
+
+本文内容来自 **Akka Fusion** 的 `fusio-log` 库，Akka Fusion 是作者在日常 Scala 应用开发中经验总结和积累的实用工具库。可以轻松创建独立的，生产级的基于Akka的应用程序。我们集成了Akka生态系统里常用及流行的组件，因此您可以快速搭建开始你的应用。大多数Akka Fusion应用程序只需要很少的配置。Akka Fusion 访问地址：https://github.com/akka-fusion/akka-fusion 。
