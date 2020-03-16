@@ -8,14 +8,12 @@ scalaVersion := "2.13.1"
 
 scalafmtOnCompile := true
 
-resolvers ++= Seq("Bintray akka-fusion".at("https://akka-fusion.bintray.com/maven"), Resolver.sonatypeRepo("snapshots"))
+resolvers ++= Seq("Bintray helloscala".at("https://helloscala.bintray.com/maven"), Resolver.sonatypeRepo("snapshots"))
 
-val versionFusion = "2.0.2"
-val versionAkka = "2.6.1"
+val versionFusion = "2.0.6"
 
 libraryDependencies ++= Seq(
-  "com.typesafe.akka" %% "akka-persistence-typed" % versionAkka,
-  "com.typesafe.akka" %% "akka-cluster-sharding-typed" % versionAkka,
-  "com.akka-fusion" %% "fusion-json" % versionFusion,
-  "com.akka-fusion" %% "fusion-core" % versionFusion,
-  "com.akka-fusion" %% "fusion-testkit" % versionFusion % Test)
+  "com.helloscala.fusion" %% "fusion-cluster" % versionFusion,
+  "com.helloscala.fusion" %% "fusion-json-jackson" % versionFusion,
+  "com.helloscala.fusion" %% "fusion-core" % versionFusion,
+  "com.helloscala.fusion" %% "fusion-testkit" % versionFusion % Test)
