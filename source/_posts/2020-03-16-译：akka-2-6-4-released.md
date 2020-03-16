@@ -84,7 +84,11 @@ Akka Typed 的分布式发布/订阅允许定义主题，集群任意节点上�
 
 The distributed publish subscribe topics also work in a non-cluster setting where all publishers and subscribers are local and can therefore be used as an alternative to the `ActorSystem` event bus.
 
+<<<<<<< HEAD
 分布式发布/订阅主题也可以在非集群设置中工作，所有发布者和订阅者都在本地，因此可以使用 `ActorSystem` 的事件总线（event bus）替代（集群方式实现）。
+=======
+分布式发布/订阅主题也可以在非集群化设置里工作，所有发布者和订阅者都在本地，即可使用 `ActorSystem` 的事件总线替代（集群方式实现）。
+>>>>>>> d7269e42ffdab9ca590a967a29268d9e103df915
 
 You find more information and a code example in the [documentation for distributed pub sub](https://doc.akka.io/docs/akka/current/typed/distributed-pub-sub.html).
 
