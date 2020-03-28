@@ -1,7 +1,7 @@
 title: Akka Cookbook
 date: 2019-11-24 19:08:10
 category:
-  - book
+  - 作品
   - akka-cookbook
 tags:
   - book
