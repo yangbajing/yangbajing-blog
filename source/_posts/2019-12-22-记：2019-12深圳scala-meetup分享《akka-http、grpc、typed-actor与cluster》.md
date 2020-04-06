@@ -1,8 +1,8 @@
 title: 2019.12深圳Scala Meetup分享《Akka HTTP、gRPC、Typed Actor与Cluster工程实践》演讲视频
 date: 2019-12-22 10:37:52
 category:
-  - scala
-  - akka
+  - 作品
+  - lecture
 tags:
   - akka
   - scala
