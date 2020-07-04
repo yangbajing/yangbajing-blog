@@ -35,14 +35,6 @@ PostgreSQL JDBC 驱动支持 `reWriteBatchedInserts=true` 连接参数，可以�
     }
 ```
 
-上面测试代码执行输出会是：
-
-```
-[-2, -2, 1]
-```
-
-这里看到返回结果的除最后一个值为 `1` 以外其余都是 `-2`。
-
 ## Mybatis
 
 ### 使用 <foreach>
