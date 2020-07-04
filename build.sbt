@@ -16,6 +16,8 @@ resolvers ++= Seq(
 val versionFusion = "2.0.6"
 
 libraryDependencies ++= Seq(
+  "org.postgresql" % "postgresql" % "42.2.14",
+  "io.r2dbc" % "r2dbc-postgresql" % "0.8.3.RELEASE",
   "org.projectlombok" % "lombok" % "1.18.12",
   "com.typesafe.akka" %% "akka-serialization-jackson" % "2.6.6",
   "com.typesafe.akka" %% "akka-persistence-typed" % "2.6.6",
