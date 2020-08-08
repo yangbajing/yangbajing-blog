@@ -143,7 +143,7 @@ out.println(objectMapper.writeValueAsString(jsonArray));
 ["Jackson","JSON"]
 ```
 
-**Java 类转换成 Jackson JasonNode**
+**Java 类转换成 Jackson JsonNode**
 ```java
 JsonNode jsonNode = objectMapper.valueToTree(javaTime);
 ```
@@ -177,7 +177,7 @@ private Long _version;
 
 `@JsonIgnore` 注解也可以添加在 **getter** 函数上。
 
-**JsonIgnoreProperties**
+**@JsonIgnoreProperties**
 
 ```java
 @JsonIgnoreProperties({"_version", "timestamp"})
@@ -247,7 +247,7 @@ public class PgJsonDeserializer extends StdDeserializer<Json> {
 
 ### Jackson Module
 
-当自定义（反）序列化变多时，在每个类上通过注解手工指定（反）序列化器就变得很繁琐。我们可以通过定义一个 Jackson Module 并使用 `.findAndRegisterModules()` 通过 Java 的 Service 机制自动注册到 `ObjectMapper`。
+当自定义（反）序列化变多时，在每个类上通过注解手工指定（反）序列化器就变得很繁琐。我们可以通过定义一个 Jackson Module 并使用 `.findAndRegisterModules()` 通过 Java 的 Service 机制自动注册到 `ObjectMapper`。通过 Module 机制注册了类型的序列化、反序列化器后，不在需要在属性或方法上定义 `@JsonSerialize` 和 `@JsonDeserialize` 注解。
 
 **1.** 定义 **Serializers** 和 **Deserializers**
 
@@ -306,7 +306,7 @@ public class ExampleModule extends com.fasterxml.jackson.databind.Module {
 
 **3.** 定义 `META-INF.services` 文件（可选）
 
-通过 Java ServiceLoader 机制，Jackson 可以自动注册配置的 **Module**。在 `com.fasterxml.jackson.databind.Module` 配置文件里指定需要自动注册 Module 的全路径，多个 Module 可以写在多行。注意：**services** 配置文件必需为 `com.fasterxml.jackson.databind.Module`。
+通过 Java ServiceLoader 机制，Jackson 可以自动注册配置的 **Module**。在 `com.fasterxml.jackson.databind.Module` 配置文件里指定需要自动注册 Module 的全路径，多个 Module 可以写在多行。注意：**services** 配置文件必须为 `com.fasterxml.jackson.databind.Module`。
 
 ```
 src/main/resources/
@@ -369,3 +369,8 @@ public class CoreWebConfiguration implements WebFluxConfigurer {
     }
 }
 ```
+
+## 小结
+
+为 Java 世界里众多 JSON 库选择烦恼？Jackson、Gson、Fastjson……不要犹豫，使用 Jackson！除了在 Spring 生态里开箱既用，在 Java 世界里也是最流行的。Jackson 除了支持 Scala 数据类型，还支持 Kotlin，对于 JVM 多语言开发，还有更好的选择吗？
+
