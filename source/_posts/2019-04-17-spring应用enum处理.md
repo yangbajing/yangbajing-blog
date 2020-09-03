@@ -1,7 +1,6 @@
 title: Spring应用enum处理
 date: 2019-04-17 19:10:12
 category:
-  - work
   - java
 tags:
   - spring

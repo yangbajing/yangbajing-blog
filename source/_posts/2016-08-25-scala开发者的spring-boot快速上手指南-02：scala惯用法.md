@@ -2,10 +2,11 @@ title: Scala开发者的Spring-Boot快速上手指南 02：Scala惯用法
 date: 2016-08-25 22:11:21
 categories: scala
 tags:
-- scala
-- java
-- spring boot
-- gradle
+  - scala
+  - java
+  - spring-boot
+  - spring
+  - gradle
 ---
 
 *(这是一篇迟来的文章，从3月份计划到成文花了5个月多……以后需要避免这样的低效率。)*

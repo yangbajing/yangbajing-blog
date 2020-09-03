@@ -2,11 +2,12 @@ title: Scala开发者的Spring-Boot快速上手指南 01
 date: 2016-03-03 21:02:53
 categories: scala
 tags:
-- scala
-- spring boot
-- sbt
-- java
-- maven
+  - scala
+  - spring-boot
+  - spring
+  - sbt
+  - java
+  - maven
 ---
 
 做为一个Scala爱好者，是很想基于 [Lightbend](http://www.lightbend.com/) 的一套架构进行软件开发的。[Play](https://playframework.com/)，[Akka](http://akka.io/)，[Scala](http://scala-lang.org/)，[Spark](http://spark.apache.org/)……。不过理想很丰满，现实却很骨感。鉴于那批原教旨主义者，他们对 [Spring](http://spring.io/) 已经疯狂迷恋，我等讲道理、讲实际的人也只好将 Scala 与 Spring Boot 进行整合。这两兄弟是和睦的，是友好的，并不是有你无他，完全可以在能力和现实中实现一个美好的平衡。
