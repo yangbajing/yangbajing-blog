@@ -9,7 +9,7 @@ tags:
   - exactly-once
 ---
 
-Flink Kafka Exactly Once，确定一次消费/写入。示例代码：[https://github.com/yangbajing/learn-bigdata/tree/master/learn-flink/src/main/scala/connector/kafka](https://github.com/yangbajing/learn-bigdata/tree/master/learn-flink/src/main/scala/connector/kafka) 。
+Flink Kafka Exactly Once，确定一次消费/写入。示例代码：[https://github.com/yangbajing/learn-bigdata/tree/develop/learn-flink/src/main/scala/connector/kafka](https://github.com/yangbajing/learn-bigdata/tree/develop/learn-flink/src/main/scala/connector/kafka) 。
 
 ## Consumer
 
@@ -55,3 +55,6 @@ properties.setProperty("transaction.timeout.ms", s"${60 * 5 * 1000}")
 ### watermark assigner 未触发
 
 **请注意**：如果 watermark assigner 依赖于从 Kafka 读取的消息来上涨其 watermark (通常就是这种情况)，那么所有主题和分区都需要有连续的消息流。否则，整个应用程序的 watermark 将无法上涨，所有基于时间的算子(例如时间窗口或带有计时器的函数)也无法运行。单个的 Kafka 分区也会导致这种反应。这是一个已在计划中的 Flink 改进，目的是为了防止这种情况发生（请见[FLINK-5479: Per-partition watermarks in FlinkKafkaConsumer should consider idle partitions](https://issues.apache.org/jira/browse/FLINK-5479)）。同时，可能的解决方法是将*心跳消息*发送到所有 consumer 的分区里，从而上涨空闲分区的 watermark。
+
+*注：Flink 1.11.0 已提供了此问题的解决方案，通过设置合适 [idleness timeouts](https://ci.apache.org/projects/flink/flink-docs-release-1.11/dev/event_timestamps_watermarks.html#dealing-with-idle-sources) 来解决此问题（[https://ci.apache.org/projects/flink/flink-docs-release-1.11/dev/event_timestamps_watermarks.html#dealing-with-idle-sources](https://ci.apache.org/projects/flink/flink-docs-release-1.11/dev/event_timestamps_watermarks.html#dealing-with-idle-sources)）。*
+
