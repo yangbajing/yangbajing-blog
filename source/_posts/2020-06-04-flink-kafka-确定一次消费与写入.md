@@ -23,7 +23,7 @@ Producer exactly once 需要启用 flink 的检查点，并在实例化 `FlinkKa
 
     val properties = new Properties()
     properties.setProperty("bootstrap.servers", "localhost:9092")
-   
+ 
     val producer = new FlinkKafkaProducer[NameTimestamp](
       topic,
       new NameTimestampSerializationSchema(topic),
