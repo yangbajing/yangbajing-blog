@@ -41,7 +41,7 @@ search:
 
 # Comment
 comment:
-    disqus: yangbajing # enter disqus shortname here
+    disqus: #yangbajing # enter disqus shortname here
     duoshuo: # enter duoshuo shortname here
     youyan: # enter youyan uid here
     facebook: # enter true to enable
