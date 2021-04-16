@@ -1642,11 +1642,6 @@ hexo-tag-plantuml@~1.0.0:
   resolved "https://repo.huaweicloud.com/repository/npm/hexo-tag-plantuml/-/hexo-tag-plantuml-1.0.0.tgz#62bd18de614f9620e22a0c7286eb9a708deda7c8"
   integrity sha1-Yr0Y3mFPliDiKgxyhuuacI3tp8g=
 
-hexo-theme-landscape@^0.0.3:
-  version "0.0.3"
-  resolved "https://repo.huaweicloud.com/repository/npm/hexo-theme-landscape/-/hexo-theme-landscape-0.0.3.tgz#87d1f4d613da9be5245dad0d4b80479eab70d386"
-  integrity sha512-b0Di+TUVs4ESrNX4ULEh9uQmADpO6kr10rIJ2OGZM8suNQNFKdxn+vJUjnLfKkCPJAfVmS7/S83KCNYe4tpoNw==
-
 hexo-util@^0.6.3:
   version "0.6.3"
   resolved "https://repo.huaweicloud.com/repository/npm/hexo-util/-/hexo-util-0.6.3.tgz#16a2ade457bef955af0dfd22a3fe6f0a49a9137c"
