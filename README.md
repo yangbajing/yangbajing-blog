@@ -1,12 +1,6 @@
-# http://www.yangbajing.me
+# https://www.yangbajing.me
 
-[http://www.yangbajing.me](http://www.yangbajing.me)
+[https://www.yangbajing.me](https://www.yangbajing.me)
 
-{% echarts 400 '85%' %}
-\\TODO echarts option goes here
-{% endecharts %}
-
-{% plantuml %}
-    Bob->Alice : hello
-{% endplantuml %}
+羊八井花园：卖水果的程序员
 
