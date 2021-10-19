@@ -1,5 +1,5 @@
-title: 使用 Pulsar CDC 同步 PostgreSQL 数据造成 WAL 文件数量持续增长问题排查
-date: 2021-09-22 19:50:31
+title: 使用 Pulsar CDC 同步 PostgreSQL
+date: 2021-09-30 19:50:31
 category:
 tags:
 ---
