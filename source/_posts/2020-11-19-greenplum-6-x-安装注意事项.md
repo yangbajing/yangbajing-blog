@@ -5,7 +5,7 @@ category:
   - greenplum
 tags:
   - greenplum
-  - postgres
+  - postgresql
   - centos
 ---
 

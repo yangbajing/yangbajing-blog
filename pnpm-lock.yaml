@@ -9,7 +9,7 @@ importers:
   .:
     dependencies:
       hexo:
-        specifier: ^5.4.0
+        specifier: ^5.4.2
         version: 5.4.2(chokidar@3.6.0)
       hexo-deployer-git:
         specifier: 3.0.0

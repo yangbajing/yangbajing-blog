@@ -4,8 +4,7 @@ categories:
 - bigdata
 - postgresql
 tags:
-- postgres 
-- postgresql 10
+- postgresql
 ---
 
 1. [《PostgreSQL从入门到不后悔》](https://www.yangbajing.me/2018/02/05/postgresql%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E4%B8%8D%E5%90%8E%E6%82%94/)

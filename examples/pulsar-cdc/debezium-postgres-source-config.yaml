@@ -1,0 +1,23 @@
+tenant: "public"
+namespace: "default"
+name: "debezium-postgres-source"
+topicName: "debezium-postgres-topic"
+archive: "connectors/pulsar-io-debezium-postgres-2.11.4.nar"
+parallelism: 1
+runtimeFlags: "-Xms64M -Xmx128M"
+configs:
+    plugin.name: "pgoutput"
+    poll.interval.ms: 1000
+    heartbeat.interval.ms: 30000
+    pulsar.service.url: "pulsar://127.0.0.1:6650"
+    #snapshot.mode: "never"
+    database.hostname: "127.0.0.1"
+    database.port: "5432"
+    database.user: "postgres"
+    database.password: "postgres"
+    database.dbname: "postgres"
+    database.server.name: "yangbajing"
+    schema.include.list: "public"
+    table.include.list: "public.inventory"
+    decimal.handling.mode: "string"
+    time.precision.mode: "connect"
