@@ -67,8 +67,11 @@ docker restart postgres-12
 
 ```shell
 docker exec -it -u postgres postgres-12 psql
+```
 
-# 以下步骤在 psql 中执行
+以下步骤在 psql 中执行：
+
+```postgresql
 create table inventory (
   id bigserial primary key,
   name varchar(255) not null,
@@ -79,9 +82,9 @@ create table inventory (
   create_time timestamptz not null,
   update_by bigint,
 update_time timestamptz);
-alter table inventory replica identity FULL;
+alter table inventory replica identity FULL; -- 可选，后文说明
 insert into inventory(name, price, quantity, create_by, create_time)
-values ('榴莲', 21, 78, 1, now()), ('黄桃', 12.5, 202, 1, now());
+values ('榴莲', 21, 78, 1, now()), ('黄桃', 12.5, 202, 1, now()), ('芒果', 8.32, 13.32, 1, now());
 ```
 
 ## CDC
@@ -121,19 +124,44 @@ configs:
     --source-config-file $(pwd)/debezium-postgres-source-config.yaml
 ```
 
-监听 topic 查看消息
+> 在生产环境，可以将 `localrun` 换成 `create` 来创建一个 Pulsar Source，这里使用 `localrun` 只是演示使用。
+
+#### 监听 topic 查看消息
 
 ```shell
 ./bin/pulsar-client consume -s "sub-inventory" -n 0 -p Earliest persistent://public/default/dbserver1.public.inventory
 ```
 
-因为指定了 `-p Earliest`，我们将从 Topic 里最早的消息开始消费。
+因为指定了 `-p Earliest`，我们将从 Topic 里最早的消息开始消费。我们将看到终端输出获取到两条消息（为了显示效果，对输出内容进行了换行）。
+
+其 `op` 操作类型为 `"r"`，代表是读取数据（快照）。
+
+第一条消息的 `source.snapshot` 值为 `"true"`，而第三条的值为 `last`，这指明了这些数据为第一次初始化 CDC 时读取数据表的全是快照数据，而 `"last"` 代表快照数据的最后一条。我们可以通过此判断快照数据是否完成，因为通常情况下在初始化快照数据时不需要做额外的业务逻辑处理。
 
 ```shell
 ----- got message -----
-key:[eyJpZCI6MX0=], properties:[], content:{"before":null,"after":{"id":1,"name":"榴莲","price":"21.0000","quantity":"78.0000","status":1,"create_by":1,"create_time":"2024-07-03T13:15:56.757356Z","update_by":null,"update_time":null},"source":{"version":"1.7.2.Final","connector":"postgresql","name":"yangbajing","ts_ms":1720012556759,"snapshot":"false","db":"postgres","sequence":"[\"23684256\",\"23684360\"]","schema":"public","table":"inventory","txId":505,"lsn":23684360,"xmin":null},"op":"c","ts_ms":1720012556991,"transaction":null}
+key:[eyJpZCI6MX0=], properties:[], content:{
+  "before":null,
+  "after":{"id":1,"name":"榴莲","price":"21.0000","quantity":"78.0000","status":1,"create_by":1,"create_time":"2024-07-03T15:05:46.244534Z","update_by":null,"update_time":null},
+  "source":{"version":"1.7.2.Final","connector":"postgresql","name":"yangbajing","ts_ms":1720019387942,
+    "snapshot":"true",
+    "db":"postgres","sequence":"[null,\"23848312\"]","schema":"public","table":"inventory","txId":515,"lsn":23848312,"xmin":null},
+  "op":"r",
+  "ts_ms":1720019387945,"transaction":null}
 ----- got message -----
-key:[eyJpZCI6Mn0=], properties:[], content:{"before":null,"after":{"id":2,"name":"黄桃","price":"12.5000","quantity":"202.0000","status":1,"create_by":1,"create_time":"2024-07-03T13:15:56.757356Z","update_by":null,"update_time":null},"source":{"version":"1.7.2.Final","connector":"postgresql","name":"yangbajing","ts_ms":1720012556759,"snapshot":"false","db":"postgres","sequence":"[\"23684256\",\"23684688\"]","schema":"public","table":"inventory","txId":505,"lsn":23684688,"xmin":null},"op":"c","ts_ms":1720012556991,"transaction":null}
+key:[eyJpZCI6Mn0=], properties:[], content:{"before":null,"after":{"id":2,"name":"黄桃","price":"12.5000","quantity":"202.0000","status":1,"create_by":1,"create_time":"2024-07-03T15:05:46.244534Z","update_by":null,"update_time":null},
+  "source":{"version":"1.7.2.Final","connector":"postgresql","name":"yangbajing","ts_ms":1720019387948,
+    "snapshot":"true",
+    "db":"postgres","sequence":"[null,\"23848312\"]","schema":"public","table":"inventory","txId":515,"lsn":23848312,"xmin":null},
+  "op":"r",
+  "ts_ms":1720019387948,"transaction":null}
+----- got message -----
+key:[eyJpZCI6M30=], properties:[], content:{"before":null,"after":{"id":3,"name":"芒果","price":"8.3200","quantity":"13.3200","status":1,"create_by":1,"create_time":"2024-07-03T15:05:46.244534Z","update_by":null,"update_time":null},
+  "source":{"version":"1.7.2.Final","connector":"postgresql","name":"yangbajing","ts_ms":1720019387948,
+    "snapshot":"last",
+    "db":"postgres","sequence":"[null,\"23848312\"]","schema":"public","table":"inventory","txId":515,"lsn":23848312,"xmin":null},
+  "op":"r",
+  "ts_ms":1720019387948,"transaction":null}
 ```
 
 #### 执行 DML 操作
@@ -157,8 +185,6 @@ key:[eyJpZCI6M30=], properties:[], content:{"before":null,"after":{"id":3,"name"
 ----- got message -----
 key:[eyJpZCI6MX0=], properties:[], content:{"before":{"id":1,"name":"榴莲","price":"21.0000","quantity":"78.0000","status":1,"create_by":1,"create_time":"2024-07-03T13:15:56.757356Z","update_by":null,"update_time":null},"after":null,"source":{"version":"1.7.2.Final","connector":"postgresql","name":"yangbajing","ts_ms":1720012724177,"snapshot":"false","db":"postgres","sequence":"[\"23693184\",\"23693240\"]","schema":"public","table":"inventory","txId":509,"lsn":23693240,"xmin":null},"op":"d","ts_ms":1720012724249,"transaction":null}
 ```
-
-### 解读消息内容
 
 #### Topic 命名规则
 
@@ -189,7 +215,9 @@ key:[eyJpZCI6MX0=], properties:[], content:{"before":{"id":1,"name":"榴莲","pr
 
 ##### `before`，输出 `update` 和 `delete` 之前的数据
 
-回到之前初始化 PG 数据，注意有一句：`alter table inventory replica identity FULL;`。它设置 PG 在写入预写日志时，将旧值和新值都进行记录，这样我们就可以获取到数据修改以前的值。这可以方便我们对数据变更做进一步的对比，但它也会造成 WAL 的增大，需要合理评判是否启用此特性。通常来说，我们可以保持默认配置：`DEFAULT`，只在 `delete` 时会在 `before` 字段显示删除前的数据，而 `update` 时不用。因为对于我们的 CDC 目的库表来说，既然是一条更新记录，那代表目的库已经有此记录，我们完全可以使用目的库已存在的记录来做新、旧数据对比。
+回到之前初始化 PG 数据，注意有一句：`alter table inventory replica identity FULL;`。它设置 PG 在写入预写日志时，将旧值和新值都进行记录，这样我们就可以获取到数据修改以前的值。这可以方便我们对数据变更做进一步的对比，但它也会造成 WAL 的增大，需要合理评判是否启用此特性。
+
+> 通常来说，我们可以保持默认配置：`DEFAULT`，只在 `delete` 时会在 `before` 字段显示删除前的数据，而 `update` 时不用。因为对于我们的 CDC 目的库表来说，既然是一条更新记录，那代表目的库已经有此记录，我们完全可以使用目的库已存在的记录来做新/旧数据对比。
 
 ##### `after`，输出 `create`、`update` 后以及快照初始化时的数据
 
@@ -215,5 +243,13 @@ key:[eyJpZCI6MX0=], properties:[], content:{"before":{"id":1,"name":"榴莲","pr
 
 - `c`：创建记录，对应 SQL `insert`
 - `u`：更新记录，对应 SQL `update`
-- `d`: 删除记录，对应 SQL `delete`
-- `r`: 读取记录，只有的快照模式（`snapshot.mode` 不为 `never`）时有用
+- `d`：删除记录，对应 SQL `delete`
+- `r`：读取记录，只有的快照模式（`snapshot.mode` 不为 `never`）时有用
+
+## 总结
+
+Pulsar CDC 除可用于对多个业务数据库的数据进行“实时”采集外，也可以用于“事件消息表”的实现。通过事件消息表，可以确保数据库事务和 MQ 发送事务保持一致，而且在一定程度上也可以简化业务程序员的开发复杂度。另文将对基于 Pulsar CDC 和 PostgreSQL 实现事件消息表进行较为详细的介绍。
+
+本文完整示例脚本见：[https://github.com/yangbajing/yangbajing-blog/tree/main/examples/pulsar-cdc](https://github.com/yangbajing/yangbajing-blog/tree/main/examples/pulsar-cdc) 。
+
+注：本文操作也适配 Pulsar 3.0 LTS 及 PostgreSQL 更高版本，当有差异时我将另文更新差异说明。
