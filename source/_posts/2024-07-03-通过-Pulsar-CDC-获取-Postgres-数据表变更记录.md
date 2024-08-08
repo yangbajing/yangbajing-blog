@@ -1,12 +1,16 @@
 title: 通过 Pulsar CDC 获取 Postgres 数据表变更记录
-tags:
-  - pulsar
-  - cdc
-  - postgresql
-categories:
-  - bigdata
-  - postgresql
 date: 2024-07-03 21:59:01
+tags:
+
+- pulsar
+- cdc
+- postgresql
+
+categories:
+
+- bigdata
+- pulsar
+
 ---
 
 在当今数据驱动的时代，数据的实时性、完整性和一致性成为了企业业务成功的关键因素。随着微服务单服单库（每个微服务都有自己单独的数据库）的应用，以及数据量的爆炸性增长和业务的快速迭代，传统的数据处理和同步方式已难以满足现代企业的需求。Apache Pulsar，作为一个云原生的分布式消息和流处理平台，凭借其卓越的吞吐量和低延迟特性，正在逐渐成为大数据和流处理领域的明星。而Pulsar CDC技术的引入，更是为数据的实时捕获和同步提供了强有力的支持。
@@ -43,7 +47,7 @@ cd ../
 ```shell
 docker run -d --name postgres-12 \
     -p 5432:5432 \
-    -e POSTGRES_PASSWORD=postgres \    
+    -e POSTGRES_PASSWORD=postgres \
     postgres:12
 ```
 
@@ -173,7 +177,7 @@ values ('芒果', 8.32, 13.32, 1, now());
 delete from inventory where id = 1;
 ```
 
-#### 从 Topic 中获得数据更新信息：
+#### 从 Topic 中获得数据更新信息
 
 ```shell
 ----- got message -----
@@ -239,7 +243,7 @@ key:[eyJpZCI6MX0=], properties:[], content:{"before":{"id":1,"name":"榴莲","pr
 }
 ```
 
-##### `op` 字段通常有如下几种情况：
+##### `op` 字段通常有如下几种情况
 
 - `c`：创建记录，对应 SQL `insert`
 - `u`：更新记录，对应 SQL `update`

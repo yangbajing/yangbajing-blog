@@ -2,13 +2,14 @@ title: 微服务开放环境：Spring & Akka & Docker
 date: 2020-05-12 10:17:48
 category: work
 tags:
-  - spring
-  - akka
-  - docker
-  - micro-service
+
+- spring
+- akka
+- docker
+- 微服务
+
 ---
 
 随着微服务的流行，服务拆分与服务依赖越来越多，想在本机搭建一套完整的开发环境愈来愈有挑战。代码服务还好，多开几个 IDE 并启动多个应用服务即可，但若你使用了多种数据库系统、缓存系统、消息系统等时，在本机手动安装就非常繁琐了……可以通过 Docker 来简化这些系统的安装。
 
 本文是对近一年微服务开发环境实践记录，我们在微服务开发中混合使用了 Spring Cloud 框架和 Akka 库，同时应用 Java 和 Scala 两们语言。本文主要介绍了微服务后端开发环境，未涉及前端。
-

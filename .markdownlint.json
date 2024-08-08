@@ -1,7 +1,11 @@
 {
   "default": true,
   "no-hard-tabs": true,
+  "MD003": { "style": "atx" },
   "MD007": { "indent": 4 },
   "MD013": { "line_length": 400 },
+  "MD025": {
+    "front_matter_title": "^\\s*title\\s*[:=]"
+  },
   "MD033": { "allowed_elements": ["br"] }
 }
