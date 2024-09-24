@@ -12,13 +12,13 @@ gRPC-Web 是一个基于 gRPC 的跨平台 Web 客户端。使用 gRPC，可以�
 
 gRPC-Web 与 REST 比较有如下优势：
 
-- 强类型安全和更丰表现力的类型系统。相对 RESTful 常用的 JSON 类型，protobuf 支持更丰富的抽像。
+- 强类型安全和更丰富的表现力的类型系统。相对 RESTful 常用的 JSON 类型，protobuf 支持更丰富的抽像。
 - 一致的代码生成方式。在使用 REST 时，通过会通过 OpenAPI 规范定义来生成前端代码，但每个实现语言的 REST 客户端都有不同的代码生成方式以及对 enum 类型的支持一直不好，这需要开发者手动维护。而 gRPC-Web 则通过 protobuf 生成前端代码，可以复用后端接口。
 - 可复用后端 gRPC 微服务接口，减少重复工作量
 
 ### gRPC-Web vs GraphQL
 
-与 REST 一样，gRPC-Web 也能很好的融入 HTTP 生态架构中，这一点和 GraphQL 不一样。在 GraphQL 中因为所有的接口都在 body（JSON对象）中以字段的形式定义，你很难在 HTTP 网关/代理上做基于 URI 拦截的统一接口权限校验。GraphQL Federation 可以实现多个后端 GraphQL 服务 API 的聚合（[Apollo Router](https://github.com/apollographql/router)是其中一个很好的实现），但会给整个架构引入一层抽象并带来复杂性。这时候，也许我们需要综合考虑引入 GraphQL 的收益。
+与 REST 一样，gRPC-Web 也能很好地融入 HTTP 生态架构中，这一点和 GraphQL 不一样。在 GraphQL 中因为所有的接口都在 body（JSON对象）中以字段的形式定义，你很难在 HTTP 网关/代理上做基于 URI 拦截的统一接口权限校验。GraphQL Federation 可以实现多个后端 GraphQL 服务 API 的聚合（[Apollo Router](https://github.com/apollographql/router)是其中一个很好的实现），但会给整个架构引入一层抽象并带来复杂性。这时候，也许我们需要综合考虑引入 GraphQL 的收益。
 
 gRPC-Web/gRPC 服务方法直接暴露到 HTTP URI 上，这可以很方便的统一做基于 URI 拦截的权限校验功能。同时，对于多个后端服务的聚合，可复用 HTTP 服务器的反向代码（如 Nginx 的 `proxy_pass`）。
 
